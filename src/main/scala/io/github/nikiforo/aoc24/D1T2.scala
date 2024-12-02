@@ -2,7 +2,7 @@ package io.github.nikiforo.aoc24
 
 object D1T2 {
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("1")
     println(compute(lines))
   }
