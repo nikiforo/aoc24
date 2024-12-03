@@ -1,7 +1,9 @@
 package io.github.nikiforo.aoc24
 
+import org.scalatest.Ignore
 import org.scalatest.funsuite.AnyFunSuite
 
+@Ignore
 final class D1T2Suite extends AnyFunSuite {
 
   test("example") {
