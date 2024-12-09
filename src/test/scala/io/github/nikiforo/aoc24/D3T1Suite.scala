@@ -1,9 +1,9 @@
 package io.github.nikiforo.aoc24
 
-import org.scalatest.Ignore
+import org.scalatest.DoNotDiscover
 import org.scalatest.funsuite.AnyFunSuite
 
-@Ignore
+@DoNotDiscover
 final class D3T1Suite extends AnyFunSuite {
 
   test("example") {
