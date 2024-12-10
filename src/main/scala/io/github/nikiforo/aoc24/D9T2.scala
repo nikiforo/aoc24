@@ -8,7 +8,7 @@ object D9T2 {
     def replace(b: Block): List[Block] = if (b.size < size) List(b, Block(size - b.size, value)) else List(b)
   }
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("9")
     println(compute(lines))
   }

@@ -4,7 +4,7 @@ import scala.annotation.tailrec
 
 object D9T1 {
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("9")
     println(compute(lines))
   }
