@@ -4,7 +4,7 @@ import scala.collection.mutable
 
 object D11T2 {
 
-  abstract class TopDownTab[S, O](tab: mutable.Map[S, O]) {
+  private abstract class TopDownTab[S, O](tab: mutable.Map[S, O]) {
 
     final def compute(s: S): O = tab.getOrElseUpdate(s, bare(s))
 
@@ -13,10 +13,10 @@ object D11T2 {
 
   def main(args: Array[String]): Unit = {
     val lines = aocLines("11")
-    println(compute(lines, 75))
+    println(aocCompute(lines, 75))
   }
 
-  def compute(lines: List[String], blinks: Int): Long = {
+  def aocCompute(lines: List[String], blinks: Int): Long = {
     val topDown = new TopDownTab(mutable.Map.empty[(String, Int), Long]) {
       final def bare(s: (String, Int)): Long = {
         val (stone, num) = s

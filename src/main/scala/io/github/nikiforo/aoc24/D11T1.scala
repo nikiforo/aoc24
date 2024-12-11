@@ -1,5 +1,7 @@
 package io.github.nikiforo.aoc24
 
+import scala.annotation.tailrec
+
 object D11T1 {
 
   def solve(args: Array[String]): Unit = {
@@ -7,11 +9,12 @@ object D11T1 {
     println(compute(lines))
   }
 
-  def compute(lines: List[String]): Long = {
+  private def compute(lines: List[String]): Long = {
     blink(lines.head.split(' ').toVector, 25).length
   }
 
-  def blink(stones: Vector[String], num: Int): Vector[String] =
+  @tailrec
+  private def blink(stones: Vector[String], num: Int): Vector[String] =
     if (num <= 0) stones
     else blink(stones.flatMap(rule), num - 1)
 

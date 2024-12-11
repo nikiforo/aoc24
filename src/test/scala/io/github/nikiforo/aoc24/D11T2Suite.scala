@@ -8,6 +8,6 @@ final class D11T2Suite extends AnyFunSuite {
 
   test("example 1") {
     val lines = """125 17""".stripMargin.linesIterator.toList
-    println(D11T2.compute(lines, 6))
+    println(D11T2.aocCompute(lines, 6))
   }
 }
