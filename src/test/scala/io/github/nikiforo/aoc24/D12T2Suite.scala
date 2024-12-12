@@ -36,10 +36,4 @@ final class D12T2Suite extends AnyFunSuite{
 
     assert(D12T2.compute(lines) == 368)
   }
-
-
-  test("sides") {
-    val sides = D12T2.countSides(List((0, 0), (0, 2), (1, 0), (1, 1), (1, 2), (1, 3), (2, 3)))
-    assert(sides == 12)
-  }
 }

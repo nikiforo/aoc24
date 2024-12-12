@@ -1,8 +1,15 @@
 package io.github.nikiforo.aoc24
 
-import scala.collection.mutable
-
 object D12T2 {
+
+  private case class Coord(i: Int, j: Int) {
+
+    def up: Coord = Coord(i + 1, j)
+    def down: Coord = Coord(i - 1, j)
+    def left: Coord = Coord(i, j - 1)
+    def right: Coord = Coord(i, j + 1)
+    def inBorder[V](arr: Array[Array[V]]): Boolean = 0 <= i && i < arr.length && 0 <= j && j < arr(i).length
+  }
 
   def main(args: Array[String]): Unit = {
     val lines = aocLines("12")
@@ -14,38 +21,41 @@ object D12T2 {
     listRegions(arr).map(region => countSides(region) * region.size).sum
   }
 
-  private def listRegions(arr: Array[Array[Char]]): Seq[List[(Int, Int)]] = {
-    val visited = mutable.Set.empty[(Int, Int)]
-    def inBorder(p: (Int, Int)): Boolean = p._1 >= 0 && p._2 >= 0 && p._1 < arr.length && p._2 < arr(p._1).length
-    def findRegion(arr: Array[Array[Char]], c: Char, i: Int, j: Int): List[(Int, Int)] =
-      if (visited((i, j))) List.empty
-      else if (arr(i)(j) == c) {
-        visited += ((i, j))
-        (i, j) :: neighbour4(i, j).filter(inBorder).flatMap { case (ni, nj) => findRegion(arr, c, ni, nj) }
-      } else List.empty
-
-    for {
-      i <- arr.indices
-      j <- arr(i).indices
-      if !visited((i, j))
-    } yield findRegion(arr, arr(i)(j), i, j)
+  private def listRegions(arr: Array[Array[Char]]): List[List[Coord]] = {
+    val inds = arr.indices.flatMap(i => arr(i).indices.map(Coord(i, _)))
+    inds.foldLeft((Set.empty[Coord], List.empty[List[Coord]])) { case ((visited, regions), coord) =>
+      if (visited(coord)) (visited, regions)
+      else {
+        val region = go(arr, arr(coord.i)(coord.j), List(coord), Set.empty)
+        (visited ++ region, region :: regions)
+      }
+    }._2
   }
 
-  def countSides(region: List[(Int, Int)]): Long = {
+  def countSides(region: List[Coord]): Long = {
     val set = region.toSet
-    val top = countClusters(region.filter { case (i, j) => !set((i + 1, j)) })
-    val bottom = countClusters(region.filter { case (i, j) => !set((i - 1, j)) })
-    val right = countClusters(region.filter { case (i, j) => !set((i, j + 1)) })
-    val left = countClusters(region.filter { case (i, j) => !set((i, j - 1)) })
+    val top = countClusters(region.filter(c => !set(c.up)))
+    val bottom = countClusters(region.filter(c => !set(c.down)))
+    val right = countClusters(region.filter(c => !set(c.right)))
+    val left = countClusters(region.filter(c => !set(c.left)))
     top + bottom + right + left
   }
 
+  private def go(arr: Array[Array[Char]], c: Char, visit: List[Coord], visited: Set[Coord]): List[Coord] =
+    visit match {
+      case Nil => Nil
+      case h :: tail =>
+        if (visited(h)) go(arr, c, tail, visited)
+        else if (arr(h.i)(h.j) == c) h :: go(arr, c, neighbour4(h).filter(_.inBorder(arr)) ::: tail, visited + h)
+        else go(arr, c, tail, visited)
+    }
+
   // group coordinates into clusters that are neighbours
-  private def countClusters(list: List[(Int, Int)]): Int =
-    list.foldLeft(List.empty[Set[(Int, Int)]]) { case (sets, (i, j)) =>
-      val (cluster, others) = sets.partition(set => neighbour4(i, j).exists(set))
-      (Set((i, j)) :: cluster).reduce(_ ++ _) :: others
+  private def countClusters(list: List[Coord]): Int =
+    list.foldLeft(List.empty[Set[Coord]]) { (sets, c) =>
+      val (cluster, others) = sets.partition(set => neighbour4(c).exists(set))
+      (Set(c) :: cluster).reduce(_ ++ _) :: others
     }.size
 
-  private def neighbour4(i: Int, j: Int): List[(Int, Int)] = List((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1))
+  private def neighbour4(c: Coord): List[Coord] = List(c.up, c.down, c.left, c.right)
 }
