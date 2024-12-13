@@ -18,7 +18,7 @@ object D12T2 {
     def neighbour4: List[Coord] = List(up, down, left, right)
   }
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("12")
     println(compute(lines))
   }

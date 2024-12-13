@@ -17,7 +17,7 @@ object D12T1 {
     def right: Coord = Coord(i, j + 1)
   }
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("12")
     println(compute(lines))
   }
