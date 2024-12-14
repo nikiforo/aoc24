@@ -18,7 +18,7 @@ object D13T1 {
 
   private case class State(remaining: Coord, cost: Int, a1: Int, a2: Int)
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("13")
     println(compute(lines))
   }

@@ -11,9 +11,9 @@ object D13T2 {
     def *(k: Long): Coord = Coord(x * k, y * k)
   }
 
-  val big = 10000000000000L
+  private val big = 10000000000000L
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("13")
     println(compute(lines))
   }
