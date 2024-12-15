@@ -24,10 +24,10 @@ object D15T2 {
 
   object Dir {
 
-    def from(h: Char): Dir =
-      if (h == '^') Up
-      else if (h == '>') Right
-      else if (h == 'v') Down
+    def from(c: Char): Dir =
+      if (c == '^') Up
+      else if (c == '>') Right
+      else if (c == 'v') Down
       else Left
   }
 
@@ -37,17 +37,14 @@ object D15T2 {
   }
 
   def compute(lines: List[String]): Long = {
-    val (state, moves) = parse(lines)
-    val initialCoord = state.indices2d.find(c => state(c) == '@').get
-    val (_, resultState) = moves.map(Dir.from).foldLeft((initialCoord, state)) { case ((coord, state), dir) =>
+    val (initState, moves) = parse(lines)
+    val initCoord = initState.indices2d.find(initState(_) == '@').get
+    val (_, resultState) = moves.map(Dir.from).foldLeft((initCoord, initState)) { case ((coord, state), dir) =>
       val step = dir(coord)
-      if (state(step) == '#') (coord, state)
-      else if (!state.isBox(step)) (step, state)
-      else
-        dir match {
-          case Up | Down => if (blockedV(step, state, dir)) (coord, state) else (step, pushV(step, state, dir))
-          case Left | Right => if (blockedH(step, state, dir)) (coord, state) else (step, pushH(step, state, dir))
-        }
+      dir match {
+        case Up | Down => if (blockedV(step, state, dir)) (coord, state) else (step, pushV(step, state, dir))
+        case Left | Right => if (blockedH(step, state, dir)) (coord, state) else (step, pushH(step, state, dir))
+      }
     }
     gps(resultState)
   }

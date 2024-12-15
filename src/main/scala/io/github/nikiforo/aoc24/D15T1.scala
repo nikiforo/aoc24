@@ -22,10 +22,10 @@ object D15T1 {
 
   object Dir {
 
-    def from(h: Char): Dir =
-      if (h == '^') Up
-      else if (h == '>') Right
-      else if (h == 'v') Down
+    def from(c: Char): Dir =
+      if (c == '^') Up
+      else if (c == '>') Right
+      else if (c == 'v') Down
       else Left
   }
 
@@ -35,12 +35,11 @@ object D15T1 {
   }
 
   def compute(lines: List[String]): Long = {
-    val (state, moves) = parse(lines)
-    val initialCoord = state.indices2d.find(c => state(c) == '@').get
-    val (_, resultState) = moves.map(Dir.from).foldLeft((initialCoord, state)) { case ((coord, state), dir) =>
+    val (initState, moves) = parse(lines)
+    val initCoord = initState.indices2d.find(initState(_) == '@').get
+    val (_, resultState) = moves.map(Dir.from).foldLeft((initCoord, initState)) { case ((coord, state), dir) =>
       val step = dir(coord)
       if (isBlocked(step, state, dir)) (coord, state)
-      else if (!state.isBox(step)) (step, state)
       else (step, push(step, state, dir))
     }
     gps(resultState)
