@@ -11,7 +11,7 @@ object D14T2 {
   private val height = 103
   private val width = 101
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("14")
     val robots = lines.map(parse)
     (0 to Int.MaxValue).foreach { secs =>

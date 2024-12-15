@@ -7,7 +7,7 @@ object D14T1 {
   private val height = 103
   private val width = 101
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("14")
     println(compute(lines, 100))
   }
