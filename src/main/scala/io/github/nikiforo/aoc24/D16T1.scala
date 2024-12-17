@@ -38,7 +38,7 @@ object D16T1 {
     def indices2d: Array[Coord] = arr.indices.flatMap(i => arr(i).indices.map(Coord(i, _))).toArray
   }
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("16")
     println(compute(lines))
   }
