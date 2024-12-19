@@ -17,7 +17,7 @@ object D18T1 {
   private implicit val ordCoord: Ordering[Coord] = Ordering.by(c => (c.i, c.j))
   private implicit val listOrd: Ordering[List[Coord]] = Ordering.by(_.headOption)
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("18")
     println(compute(lines, 70, 70, 1024))
   }
