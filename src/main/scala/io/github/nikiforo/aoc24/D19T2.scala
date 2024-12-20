@@ -11,7 +11,7 @@ object D19T2 {
     protected def bare(s: S): O
   }
 
-  def main(args: Array[String]): Unit = {
+  def solve(args: Array[String]): Unit = {
     val lines = aocLines("19")
     println(aocCompute(lines))
   }
